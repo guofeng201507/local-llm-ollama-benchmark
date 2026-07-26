@@ -1,0 +1,2 @@
+datasets==4.8.4
+evalscope==1.9.1

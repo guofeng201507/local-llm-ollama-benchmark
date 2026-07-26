@@ -1,0 +1,20 @@
+# Local Python environment and caches
+.venv*/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Downloaded benchmark datasets
+eval-data/
+
+# Third-party source trees, local builds, and model runtimes
+vendor/
+
+# Large model artifacts
+*.gguf
+*.safetensors
+*.bin
+
+# Runtime logs
+eval-results/logs/
+eval-results/reports/report.html
