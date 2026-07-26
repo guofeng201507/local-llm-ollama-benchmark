@@ -22,6 +22,10 @@
 - [2026-07-26 本地小模型测试总结](2026-07-26-local-model-test-summary.md)
 - [Nanbeige 本地运行笔记](NANBEIGE42-NOTES.md)
 
+总结文档的“后续测试集与评测路线图”记录了 IFEval、EvalPlus、C-Eval、
+CMMLU、BFCL、LongBench、EvalScope 和 lm-evaluation-harness，供后续扩展
+指令遵循、代码、中文知识、工具调用与长上下文测试。
+
 ## 运行评测
 
 准备 Python 环境：

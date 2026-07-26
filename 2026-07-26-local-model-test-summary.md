@@ -312,7 +312,103 @@ ollama run qwen3:8b --think=false
 - 延迟过高
 - 耗尽 Token 仍不提交答案
 
-## 13. 文件与复现
+## 13. 后续测试集与评测路线图
+
+今天的 GSM8K 小样本主要验证了基础数学、延迟和思考停止行为。后续如果继续
+评测，建议按下面的顺序扩展，而不是只增加 GSM8K 题量。
+
+### 第一优先级：实际可用性
+
+| 测试集 | 测试内容 | 建议首轮规模 | 记录指标 |
+|---|---|---:|---|
+| [IFEval](https://github.com/google-research/google-research/tree/master/instruction_following_eval) | 字数、格式、关键词和禁止项等严格指令遵循 | 100 题，再扩展至全量 541 题 | 严格通过率、格式错误率、超长率 |
+| [EvalPlus](https://github.com/evalplus/evalplus) | HumanEval+、MBPP+ 代码生成 | HumanEval+ 先跑 20 题 | Pass@1、编译率、执行超时率、延迟 |
+| [BFCL](https://github.com/ShishirPatil/gorilla/tree/main/berkeley-function-call-leaderboard) | 函数选择、参数生成、并行和多轮工具调用 | 单轮简单/多函数共 100 题 | AST 准确率、可执行率、虚假调用率 |
+
+IFEval 应优先进行，因为今天所有模型都不同程度出现了不遵守“只输出最终
+答案”、输出过长或无法停止的问题。
+
+EvalPlus 会执行模型生成的代码，必须使用 Docker 或其他隔离沙箱，不能直接
+在主机环境运行未知代码。
+
+### 第二优先级：知识与推理
+
+| 测试集 | 测试内容 | 建议首轮规模 | 注意事项 |
+|---|---|---:|---|
+| [GSM8K](https://github.com/openai/grade-school-math) | 多步小学数学 | 固定随机种子抽样 100–300 题 | 同时记录普通/思考模式和输出截断 |
+| [C-Eval](https://github.com/hkust-nlp/ceval) | 中文考试与专业知识 | 100–300 题 | 按学科分组，避免只报告总平均 |
+| [CMMLU](https://github.com/haonan-li/CMMLU) | 中文通识与专业知识 | 100–300 题 | 与 C-Eval 使用相同采样和答案提取 |
+| [ARC](https://github.com/allenai/ai2_arc) | 英文科学推理和选择题 | 100–300 题 | 可直接通过 EvalScope 运行 |
+
+GSM8K 下一轮应使用固定随机种子抽样，而不是继续只取数据集开头，以降低
+样本顺序偏差。建议普通模式先跑 100 题；只对普通模式失败题开启思考复测，
+用于计算“思考带来的净正确率增益”和额外时间成本。
+
+### 第三优先级：长上下文
+
+| 测试集 | 测试内容 | 建议首轮规模 | 前置条件 |
+|---|---|---:|---|
+| [LongBench](https://github.com/THUDM/LongBench) | 长文档问答、摘要、检索和代码 | 先选 20 个短/中长度样本 | 上下文至少 8K，建议 16K |
+| LongBench v2 | 8K 至超长上下文综合推理 | 暂不全量 | 完整测试耗时和内存成本很高 |
+
+今天的统一测试上下文只有 4096 Token，因此不能用来评价官方宣称的 128K、
+256K 等长上下文能力。长上下文测试必须单独记录：
+
+- 实际输入 Token 数
+- 首 Token 延迟
+- 峰值内存
+- 上下文长度增加后的生成速度
+- 文档中间信息的召回率
+
+### 推荐评测框架
+
+#### [EvalScope](https://github.com/modelscope/evalscope)
+
+ModelScope 官方评测框架，今天已安装 1.9.1，并成功连接 Ollama 的 OpenAI
+兼容接口运行 GSM8K。适合统一管理 GSM8K、ARC、中文知识等标准测试。
+
+需要注意：今天发现 OpenAI 兼容接口可能默认返回思考过程，且无法像 Ollama
+原生 `/api/chat` 那样稳定控制 `think=false`。普通/思考模式配对测试应继续
+优先使用原生 API 或增加一层明确传递思考开关的适配器。
+
+#### [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness)
+
+覆盖大量学术基准，适合正式、可复现的标准分数。但需要仔细确认聊天模板、
+答案提取和 API 参数，避免模型能力与评测配置混在一起。
+
+### 建议的下一轮最小测试矩阵
+
+| 维度 | 测试集 | 样本量 |
+|---|---|---:|
+| 指令遵循 | IFEval | 100 |
+| 数学推理 | GSM8K 随机样本 | 100 |
+| 中文知识 | C-Eval 或 CMMLU | 100 |
+| 代码 | HumanEval+ | 20 |
+| 工具调用 | BFCL 单轮子集 | 30–100 |
+| 长上下文 | LongBench 短/中样本 | 20 |
+
+所有测试建议固定：
+
+- 模型版本和量化方式
+- Ollama 版本
+- 聊天模板
+- 温度 0
+- 随机种子
+- 上下文长度
+- 最大输出 Token
+- 普通/思考模式开关
+
+除正确率外，应统一记录：
+
+- P50/P95 延迟
+- 输入、思考和最终输出 Token 数
+- 生成吞吐
+- 峰值内存和 GPU 占用
+- 格式错误率
+- 超长或截断率
+- 多次运行结果波动
+
+## 14. 文件与复现
 
 核心评测脚本：
 
