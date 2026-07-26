@@ -20,3 +20,5 @@ eval-results/logs/
 eval-results/reports/report.html
 eval-results/tool-calling/*-smoke-*.jsonl
 eval-results/tool-calling/*-capability-*.jsonl
+eval-results/ifeval/qwen3-8b-smoke-2/
+eval-results/ifeval/qwen3-8b-20/

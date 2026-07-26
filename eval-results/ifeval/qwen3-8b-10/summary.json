@@ -1,0 +1,32 @@
+{
+  "model": "qwen3:8b",
+  "dataset": "IFEval fixed leading subset",
+  "samples": 10,
+  "think": false,
+  "temperature": 0,
+  "num_ctx": 4096,
+  "max_tokens": 1024,
+  "average_seconds": 54.271699999999996,
+  "average_output_tokens": 310.4,
+  "truncated": 0,
+  "scores": {
+    "strict": {
+      "prompt_correct": 8,
+      "prompt_total": 10,
+      "prompt_accuracy": 0.8,
+      "instruction_correct": 16,
+      "instruction_total": 18,
+      "instruction_accuracy": 0.8888888888888888,
+      "results": "eval-results/ifeval/qwen3-8b-10/eval_results_strict.jsonl"
+    },
+    "loose": {
+      "prompt_correct": 8,
+      "prompt_total": 10,
+      "prompt_accuracy": 0.8,
+      "instruction_correct": 16,
+      "instruction_total": 18,
+      "instruction_accuracy": 0.8888888888888888,
+      "results": "eval-results/ifeval/qwen3-8b-10/eval_results_loose.jsonl"
+    }
+  }
+}
