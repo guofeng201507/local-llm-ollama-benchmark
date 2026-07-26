@@ -1,0 +1,38 @@
+{
+  "model": "gpt-5.6-sol",
+  "execution": "Codex delegated agent",
+  "reasoning_effort": "medium",
+  "questions": "same fixed leading 10 GSM8K samples",
+  "output_instruction": "exactly 10 lines in Qn: \\boxed{number} format, no reasoning or extra text",
+  "correct": 10,
+  "total": 10,
+  "accuracy": 1.0,
+  "format_compliance": 1.0,
+  "latency_seconds": null,
+  "token_usage": null,
+  "note": "Codex agent execution does not expose Ollama-comparable local latency, throughput, memory, or token metrics.",
+  "answers": [
+    {"index": 1, "target": "18", "prediction": "18", "passed": true},
+    {"index": 2, "target": "3", "prediction": "3", "passed": true},
+    {"index": 3, "target": "70000", "prediction": "70000", "passed": true},
+    {"index": 4, "target": "540", "prediction": "540", "passed": true},
+    {"index": 5, "target": "20", "prediction": "20", "passed": true},
+    {"index": 6, "target": "64", "prediction": "64", "passed": true},
+    {"index": 7, "target": "260", "prediction": "260", "passed": true},
+    {"index": 8, "target": "160", "prediction": "160", "passed": true},
+    {"index": 9, "target": "45", "prediction": "45", "passed": true},
+    {"index": 10, "target": "460", "prediction": "460", "passed": true}
+  ],
+  "raw_output": [
+    "Q1: \\boxed{18}",
+    "Q2: \\boxed{3}",
+    "Q3: \\boxed{70000}",
+    "Q4: \\boxed{540}",
+    "Q5: \\boxed{20}",
+    "Q6: \\boxed{64}",
+    "Q7: \\boxed{260}",
+    "Q8: \\boxed{160}",
+    "Q9: \\boxed{45}",
+    "Q10: \\boxed{460}"
+  ]
+}
