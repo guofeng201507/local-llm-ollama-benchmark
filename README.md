@@ -24,6 +24,7 @@
 完整测试过程、参数、结果解释和局限见：
 
 - [2026-07-26 本地小模型测试总结](2026-07-26-local-model-test-summary.md)
+- [2026-07-26 BFCL 工具调用测试总结](2026-07-26-bfcl-tool-calling-summary.md)
 - [Nanbeige 本地运行笔记](NANBEIGE42-NOTES.md)
 
 总结文档的“后续测试集与评测路线图”记录了 IFEval、EvalPlus、C-Eval、
@@ -69,7 +70,9 @@ python3 -m venv .venv-eval
 ```text
 .
 ├── 2026-07-26-local-model-test-summary.md
+├── 2026-07-26-bfcl-tool-calling-summary.md
 ├── NANBEIGE42-NOTES.md
+├── eval_bfcl_ollama.py
 ├── eval_gsm8k_ollama.py
 ├── eval_nanbeige_smoke.py
 ├── eval-results/

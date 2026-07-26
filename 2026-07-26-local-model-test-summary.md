@@ -368,6 +368,10 @@ ollama run qwen3:8b --think=false
 IFEval 应优先进行，因为今天所有模型都不同程度出现了不遵守“只输出最终
 答案”、输出过长或无法停止的问题。
 
+BFCL `simple_python` 前20题冒烟测试现已完成，详见
+[BFCL 工具调用测试总结](2026-07-26-bfcl-tool-calling-summary.md)。下一轮应
+继续测试`multiple`、`parallel`、`irrelevance`和多轮类别。
+
 EvalPlus 会执行模型生成的代码，必须使用 Docker 或其他隔离沙箱，不能直接
 在主机环境运行未知代码。
 

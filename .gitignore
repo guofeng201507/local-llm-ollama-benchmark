@@ -18,3 +18,5 @@ vendor/
 # Runtime logs
 eval-results/logs/
 eval-results/reports/report.html
+eval-results/tool-calling/*-smoke-*.jsonl
+eval-results/tool-calling/*-capability-*.jsonl
