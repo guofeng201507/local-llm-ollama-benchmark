@@ -1,0 +1,5 @@
+{"passed": false, "reason": "api_error", "turns": [], "elapsed_seconds": 0, "output_tokens": 0, "error": "HTTP Error 400: Bad Request", "index": 1, "id": "irrelevance_0", "category": "irrelevance"}
+{"passed": false, "reason": "api_error", "turns": [], "elapsed_seconds": 0, "output_tokens": 0, "error": "HTTP Error 400: Bad Request", "index": 2, "id": "irrelevance_1", "category": "irrelevance"}
+{"passed": false, "reason": "api_error", "turns": [], "elapsed_seconds": 0, "output_tokens": 0, "error": "HTTP Error 400: Bad Request", "index": 3, "id": "irrelevance_2", "category": "irrelevance"}
+{"passed": false, "reason": "api_error", "turns": [], "elapsed_seconds": 0, "output_tokens": 0, "error": "HTTP Error 400: Bad Request", "index": 4, "id": "irrelevance_3", "category": "irrelevance"}
+{"passed": false, "reason": "api_error", "turns": [], "elapsed_seconds": 0, "output_tokens": 0, "error": "HTTP Error 400: Bad Request", "index": 5, "id": "irrelevance_4", "category": "irrelevance"}
