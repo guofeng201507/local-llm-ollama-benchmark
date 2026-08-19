@@ -26,6 +26,9 @@
 - [2026-07-26 本地小模型测试总结](2026-07-26-local-model-test-summary.md)
 - [2026-07-26 BFCL 工具调用测试总结](2026-07-26-bfcl-tool-calling-summary.md)
 - [2026-07-27 IFEval 严格指令遵循测试](2026-07-27-ifeval-summary.md)
+- [2026-08-19 Qwen3.8 27B Uncensored Q4_K_S 测试](2026-08-19-qwen3.8-27b-uncensored-q4ks.md)
+- [2026-08-19 Qwen3.8 27B 官方权重与 Uncensored 对比](2026-08-19-qwen3.8-27b-official-vs-uncensored.md)
+- [2026-08-19 全部本地模型综合对比](2026-08-19-all-local-models-comparison.md)
 - [Nanbeige 本地运行笔记](NANBEIGE42-NOTES.md)
 
 总结文档的“后续测试集与评测路线图”记录了 IFEval、EvalPlus、C-Eval、
@@ -75,6 +78,9 @@ IFEval 运行器使用 Google Research 官方数据和评分代码；具体准�
 ├── 2026-07-26-local-model-test-summary.md
 ├── 2026-07-26-bfcl-tool-calling-summary.md
 ├── 2026-07-27-ifeval-summary.md
+├── 2026-08-19-qwen3.8-27b-uncensored-q4ks.md
+├── 2026-08-19-qwen3.8-27b-official-vs-uncensored.md
+├── 2026-08-19-all-local-models-comparison.md
 ├── NANBEIGE42-NOTES.md
 ├── eval_bfcl_ollama.py
 ├── eval_gsm8k_ollama.py
