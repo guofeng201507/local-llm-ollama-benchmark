@@ -21,16 +21,23 @@
 
 ### AMD Ryzen 5 7640HS（llama.cpp + Vulkan）
 
-| 模型 | GSM8K普通10 | GSM8K思考3 | BFCL20 | IFEval Strict题级 | IFEval Strict指令级 |
-|---|---:|---:|---:|---:|---:|
-| Ornith-1.5-9B-OBLITERATED Q5_K_M | 4–5/10 | 3/3 | 16/20 | 4/10 | 11/18 |
+| 模型 | GSM8K普通10 | GSM8K思考3 | BFCL20 | IFEval Strict题级 | IFEval Strict指令级 | AdvBench 520 首句硬拒绝 |
+|---|---:|---:|---:|---:|---:|---:|
+| Ornith-1.5-9B-OBLITERATED Q5_K_M | 7/10 | 3/3 | 15/20 | 4/10 | 11/18 | 12（2.31%） |
+| mlabonne Qwen3-8B-abliterated Q5_K_M | 6/10 | 2/3 | **17/20** | 5/10 | 12/18 | **0** |
+| **lukey03 Qwen3.5-9B-abliterated Q4_K_M** | **7/10** | **3/3** | 15/20 | 5/10 | 12/18 | **0** |
 
-工具调用（16/20）与思考数学（3/3）都是并列第一，普通数学中游，但严格指令遵循
-是全部被测模型里最差的（4/10）。GSM8K 同一配置连跑两次得到 4/10 与 5/10，
-说明 ±1 题属噪声。四项测试均为单并发；IFEval 一行用的是该模型卡片推荐的采样
-（`temp=1.0 top_p=0.95 top_k=20 presence_penalty=1.5`），换用推荐采样后 IFEval 从
-3/10 升到 4/10，其余仍偏低。该模型的原生思考模式在本机不可用（单题推理就超过
-4096 token），详见 AMD 测试文档。
+上面是本机三个 abliterated 模型**各自按卡片推荐采样**（单并发、关闭思考）的结果。
+**结论是建议使用 Qwen3.5-9B-abliterated**：它首句硬拒绝 0 次，zou 口径拒绝率最低
+（2.31%，且只命中假阳性词 `illegal`、零道歉短语），能力项与 Qwen3-8B 消融版持平，
+IFEval 又是三者中最快最简洁的（17.9 秒 / 220 tokens）。三方对比与保留意见见
+[Qwen3.5-9B-abliterated 测试](2026-09-19-amd-ryzen-7640hs-abliterated-qwen3.5-9b.md)。
+
+采样设置比模型选择更容易被忽略：按仓库惯例的 `temperature=0` 测，Ornith 的 GSM8K
+只有 4–5/10 并出现退化重复，而 Qwen3 官方卡片明确写着 **DO NOT use greedy decoding**。
+换用卡片采样后 Ornith 升到 7/10。历史 `temp=0` 的行都应据此保留意见。
+
+各模型的拒答明细见 `eval-results/safety/`（只含汇总指标，不含模型生成文本）。
 
 同一台 AMD 机器还量化了 abliterated 是否真的生效：AdvBench 全量 520 题
 首句硬拒绝 12 次（其中只有 1 次出现 `I cannot`），HarmBench `standard` 全量
@@ -53,6 +60,8 @@
 - [2026-08-19 Qwen3.8 27B 官方权重与 Uncensored 对比](2026-08-19-qwen3.8-27b-official-vs-uncensored.md)
 - [2026-08-19 全部本地模型综合对比](2026-08-19-all-local-models-comparison.md)
 - [2026-09-19 AMD 迷你主机 Ornith-1.5-9B-OBLITERATED 测试](2026-09-19-amd-ryzen-7640hs-ornith-1.5-9b-abliterated.md)
+- [2026-09-19 AMD 迷你主机 abliterated Qwen3-8B 测试（与 Ornith 对比）](2026-09-19-amd-ryzen-7640hs-abliterated-qwen3-8b.md)
+- [2026-09-19 AMD 迷你主机 Qwen3.5-9B-abliterated 测试（三方对比与选型）](2026-09-19-amd-ryzen-7640hs-abliterated-qwen3.5-9b.md)
 - [Nanbeige 本地运行笔记](NANBEIGE42-NOTES.md)
 
 总结文档的“后续测试集与评测路线图”记录了 IFEval、EvalPlus、C-Eval、

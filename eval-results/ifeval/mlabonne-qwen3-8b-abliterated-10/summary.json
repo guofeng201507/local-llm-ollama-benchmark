@@ -1,0 +1,30 @@
+{
+  "model": "mlabonne-qwen3-8b-abliterated",
+  "engine": "llama.cpp",
+  "dataset": "IFEval fixed leading subset",
+  "samples": 10,
+  "sampling": "temp=0.7 top_p=0.8 top_k=20 min_p=0 (card non-thinking), enable_thinking=false",
+  "average_seconds": 29.044,
+  "average_output_tokens": 365.0,
+  "truncated": 1,
+  "scores": {
+    "strict": {
+      "prompt_correct": 5,
+      "prompt_total": 10,
+      "prompt_accuracy": 0.5,
+      "instruction_correct": 12,
+      "instruction_total": 18,
+      "instruction_accuracy": 0.6666666666666666,
+      "results": "eval-results/ifeval/mlabonne-qwen3-8b-abliterated-10/eval_results_strict.jsonl"
+    },
+    "loose": {
+      "prompt_correct": 5,
+      "prompt_total": 10,
+      "prompt_accuracy": 0.5,
+      "instruction_correct": 12,
+      "instruction_total": 18,
+      "instruction_accuracy": 0.6666666666666666,
+      "results": "eval-results/ifeval/mlabonne-qwen3-8b-abliterated-10/eval_results_loose.jsonl"
+    }
+  }
+}

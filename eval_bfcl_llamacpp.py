@@ -47,10 +47,11 @@ def tool_schema(function: dict[str, Any]) -> dict[str, Any]:
 
 
 def query(url: str, api_key: str, messages: list[dict[str, Any]],
-          functions: list[dict[str, Any]], max_tokens: int) -> tuple[dict[str, Any], float]:
+          functions: list[dict[str, Any]], max_tokens: int,
+          temperature: float) -> tuple[dict[str, Any], float]:
     payload = {"messages": messages,
                "tools": [tool_schema(f) for f in functions],
-               "temperature": 0, "max_tokens": max_tokens}
+               "temperature": temperature, "max_tokens": max_tokens}
     request = urllib.request.Request(
         url.rstrip("/") + "/v1/chat/completions",
         data=json.dumps(payload).encode(),
@@ -75,7 +76,8 @@ def run_test(args: argparse.Namespace, test: dict[str, Any], ground_truth: Any,
         messages.extend(user_messages)
         expected = (expected_multi_turn(expected_turns[turn_index], functions)
                     if args.category == "multi_turn_base" else expected_turns[turn_index])
-        result, elapsed = query(args.url, args.api_key, messages, functions, args.max_tokens)
+        result, elapsed = query(args.url, args.api_key, messages, functions,
+                                args.max_tokens, args.temperature)
         choice = result["choices"][0]
         message = choice.get("message", {})
         calls = message.get("tool_calls") or []
@@ -106,6 +108,7 @@ def main() -> None:
     parser.add_argument("--label", default="ornith-1.5-9b-obliterated")
     parser.add_argument("--limit", type=int, default=20)
     parser.add_argument("--offset", type=int, default=0)
+    parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max-tokens", type=int, default=256)
     parser.add_argument("--data-root", type=Path, default=DEFAULT_DATA_ROOT)
     parser.add_argument("--engine", default="llama.cpp")
@@ -144,6 +147,7 @@ def main() -> None:
                   f"{test['id']} reason={record['reason']} time={record['elapsed_seconds']:.2f}s")
     total = len(selected)
     print(json.dumps({"model": args.label, "engine": args.engine, "category": args.category,
+                      "temperature": args.temperature,
                       "sample": f"offset={args.offset},limit={args.limit}",
                       "correct": passed, "total": total, "accuracy": passed / total,
                       "average_seconds": elapsed_total / total,

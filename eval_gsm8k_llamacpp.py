@@ -48,7 +48,7 @@ def extract_number(text):
 def query(prompt, args):
     payload = {
         "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0,
+        "temperature": args.temperature,
         "max_tokens": args.max_tokens,
     }
     request = urllib.request.Request(
@@ -66,6 +66,7 @@ def query(prompt, args):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=10)
+    parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--url", default="http://127.0.0.1:8090")
     parser.add_argument("--api-key", default="")
     parser.add_argument("--label", default="ornith-1.5-9b-obliterated")
@@ -119,6 +120,7 @@ def main():
         "mode": args.mode,
         "model": args.label,
         "engine": "llama.cpp",
+        "temperature": args.temperature,
         "correct": correct,
         "total": args.limit,
         "accuracy": correct / args.limit,

@@ -1,0 +1,30 @@
+{
+  "model": "lukey03-qwen3.5-9b-abliterated",
+  "engine": "llama.cpp",
+  "dataset": "IFEval fixed leading subset",
+  "samples": 10,
+  "sampling": "temp=0.7 top_p=0.8 top_k=20 min_p=0 pp=1.5 rp=1.0 (Qwen3.5 card, instruct mode), enable_thinking=false",
+  "average_seconds": 17.9137,
+  "average_output_tokens": 219.6,
+  "truncated": 0,
+  "scores": {
+    "strict": {
+      "prompt_correct": 5,
+      "prompt_total": 10,
+      "prompt_accuracy": 0.5,
+      "instruction_correct": 12,
+      "instruction_total": 18,
+      "instruction_accuracy": 0.6666666666666666,
+      "results": "eval-results/ifeval/lukey03-qwen3.5-9b-abliterated-10/eval_results_strict.jsonl"
+    },
+    "loose": {
+      "prompt_correct": 5,
+      "prompt_total": 10,
+      "prompt_accuracy": 0.5,
+      "instruction_correct": 12,
+      "instruction_total": 18,
+      "instruction_accuracy": 0.6666666666666666,
+      "results": "eval-results/ifeval/lukey03-qwen3.5-9b-abliterated-10/eval_results_loose.jsonl"
+    }
+  }
+}
