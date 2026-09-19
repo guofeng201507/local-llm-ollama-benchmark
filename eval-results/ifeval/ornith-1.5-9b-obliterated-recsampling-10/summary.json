@@ -1,0 +1,30 @@
+{
+  "model": "ornith-1.5-9b-obliterated",
+  "engine": "llama.cpp",
+  "dataset": "IFEval fixed leading subset",
+  "samples": 10,
+  "sampling": "temp=1.0 top_p=0.95 top_k=20 min_p=0.0 presence_penalty=1.5 repeat_penalty=1.0, reasoning off",
+  "average_seconds": 70.9438,
+  "average_output_tokens": 802.6,
+  "truncated": 2,
+  "scores": {
+    "strict": {
+      "prompt_correct": 4,
+      "prompt_total": 10,
+      "prompt_accuracy": 0.4,
+      "instruction_correct": 11,
+      "instruction_total": 18,
+      "instruction_accuracy": 0.6111111111111112,
+      "results": "eval-results/ifeval/ornith-1.5-9b-obliterated-recsampling-10/eval_results_strict.jsonl"
+    },
+    "loose": {
+      "prompt_correct": 4,
+      "prompt_total": 10,
+      "prompt_accuracy": 0.4,
+      "instruction_correct": 11,
+      "instruction_total": 18,
+      "instruction_accuracy": 0.6111111111111112,
+      "results": "eval-results/ifeval/ornith-1.5-9b-obliterated-recsampling-10/eval_results_loose.jsonl"
+    }
+  }
+}
